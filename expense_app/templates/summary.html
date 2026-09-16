@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Summary - Expense Manager{% endblock %}
+{% block content %}
+  <h2>Summary</h2>
+  <p class="grand-total">Grand total: ${{ "%.2f"|format(grand_total) }}</p>
+
+  <h3>Totals by Category</h3>
+  {% if by_category %}
+    <table>
+      <thead>
+        <tr><th>Category</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        {% for row in by_category %}
+          <tr>
+            <td>{{ row.category }}</td>
+            <td>${{ "%.2f"|format(row.total) }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No data yet.</p>
+  {% endif %}
+
+  <h3>Totals by Month</h3>
+  {% if by_month %}
+    <table>
+      <thead>
+        <tr><th>Month</th><th>Total</th></tr>
+      </thead>
+      <tbody>
+        {% for row in by_month %}
+          <tr>
+            <td>{{ row.month }}</td>
+            <td>${{ "%.2f"|format(row.total) }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No data yet.</p>
+  {% endif %}
+{% endblock %}

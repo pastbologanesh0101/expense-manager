@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Add Expense - Expense Manager{% endblock %}
+{% block content %}
+  <h2>Add Expense</h2>
+  <form method="post" action="{{ url_for('expenses.add_expense') }}">
+    <label for="date">Date</label>
+    <input type="date" id="date" name="date" value="{{ form.date }}" required>
+
+    <label for="category">Category</label>
+    <input type="text" id="category" name="category" value="{{ form.category }}"
+           placeholder="e.g. Food, Rent, Travel" required>
+
+    <label for="amount">Amount</label>
+    <input type="number" id="amount" name="amount" value="{{ form.amount }}"
+           step="0.01" min="0.01" required>
+
+    <label for="note">Note</label>
+    <input type="text" id="note" name="note" value="{{ form.note }}"
+           placeholder="Optional note">
+
+    <button type="submit">Save Expense</button>
+  </form>
+{% endblock %}

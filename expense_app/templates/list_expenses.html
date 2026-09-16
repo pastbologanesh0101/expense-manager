@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Expenses - Expense Manager{% endblock %}
+{% block content %}
+  <h2>All Expenses</h2>
+  {% if expenses %}
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for expense in expenses %}
+          <tr>
+            <td>{{ expense.date }}</td>
+            <td>{{ expense.category }}</td>
+            <td>${{ "%.2f"|format(expense.amount) }}</td>
+            <td>{{ expense.note or "" }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No expenses yet. <a href="{{ url_for('expenses.add_expense') }}">Add one</a>.</p>
+  {% endif %}
+{% endblock %}
