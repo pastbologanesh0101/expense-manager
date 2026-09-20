@@ -1,3 +1,4 @@
+import math
 from datetime import date, datetime
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
@@ -15,6 +16,10 @@ def _parse_amount(raw_amount):
         amount = float(raw_amount)
     except ValueError:
         return None, "Amount must be a number."
+    # float() happily parses "nan"/"inf"/"-inf" as valid numbers, which would
+    # silently corrupt SUM()-based totals on the summary page.
+    if not math.isfinite(amount):
+        return None, "Amount must be a finite number."
     if amount <= 0:
         return None, "Amount must be greater than zero."
     return amount, None
