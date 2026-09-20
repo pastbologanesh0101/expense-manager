@@ -87,6 +87,20 @@ class ExpenseManagerTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b"Amount must be greater than zero.", response.data)
 
+    def test_add_expense_rejects_negative_amount(self):
+        response = self.add_expense(amount="-15.00")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Amount must be greater than zero.", response.data)
+
+        # Confirm nothing was persisted.
+        list_response = self.client.get("/expenses")
+        self.assertIn(b"No expenses yet.", list_response.data)
+
+    def test_add_expense_rejects_whitespace_only_category(self):
+        response = self.add_expense(category="   ")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b"Category is required.", response.data)
+
     def test_add_expense_rejects_bad_date_format(self):
         response = self.add_expense(date="15-01-2026")
         self.assertEqual(response.status_code, 200)
