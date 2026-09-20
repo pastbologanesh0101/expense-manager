@@ -1,8 +1,22 @@
 # Expense Manager
 
+[![Tests](https://github.com/pastbologanesh0101/expense-manager/actions/workflows/tests.yml/badge.svg)](https://github.com/pastbologanesh0101/expense-manager/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A small, self-contained personal expense tracker built with **Flask** and
 **SQLite**. Add expenses through a plain HTML form, browse them in a table,
 and see totals broken down by category and by month.
+
+## Table of contents
+
+- [Features](#features)
+- [Project layout](#project-layout)
+- [Running locally](#running-locally)
+- [Example usage](#example-usage)
+- [Running the tests](#running-the-tests)
+- [Continuous Integration](#continuous-integration)
+- [Troubleshooting / FAQ](#troubleshooting--faq)
+- [License](#license)
 
 ## Features
 
