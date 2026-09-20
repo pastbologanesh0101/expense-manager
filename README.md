@@ -83,6 +83,28 @@ SQLite database, so no files are created and no dev server is started.
 request using GitHub Actions (`actions/checkout@v4`, `actions/setup-python@v5`,
 Python 3.11).
 
+## Troubleshooting / FAQ
+
+**I entered `nan` or `inf` as an amount and it looked like it worked.**
+Python's `float()` parses the strings `"nan"`, `"inf"`, and `"-inf"` as
+valid numbers, and they aren't `<= 0`, so an amount check that only tests
+positivity lets them through — silently poisoning `SUM()`-based totals on
+the summary page. The app explicitly rejects non-finite amounts for this
+reason; if you see "Amount must be a finite number.", that's why.
+
+**Amounts show more than 2 decimal places on the summary page.**
+`amount` is stored as SQLite `REAL` (an IEEE-754 double), so values like
+`10.10` can pick up tiny floating-point rounding error when summed. This is
+a known limitation of using floats for currency — for anything beyond a
+personal tracker, store amounts as integer cents or use `Decimal`.
+
+**My database seems to have disappeared after I moved the project folder.**
+`instance/expenses.sqlite` is created relative to the app's instance path,
+which is derived from where the app package lives, not your current shell
+directory. If you copy or symlink the project elsewhere, make sure
+`instance/` comes with it, or start fresh (the schema is recreated
+automatically on first run).
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
